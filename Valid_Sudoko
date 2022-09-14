@@ -1,0 +1,49 @@
+class Solution:
+    def isValidSudoku(self, board: List[List[str]]) -> bool:
+        def outt(board):
+            l = len(board)
+            s = 3
+            out = [[None]*l for i in range(l)]
+            for n in range(l):
+                for m in range(l):
+                    k = (n // s) * s + m // s
+                    j = (n % s) * s + m % s
+                    out[k][j] = board[n][m]
+            return out
+        a=outt(board)
+        def valid_Subset(matrix):
+            for i in matrix:
+                subset=[]
+                for j in i:
+                    if j!=".":
+                        subset.append(j)
+                if len(subset)!=len(set(subset)):
+                    return False
+            return True
+        vs=valid_Subset(a)
+        
+        def valid_row(matrix):
+            for i in matrix:
+                row=[]
+                for j in i:
+                    if j!=".":
+                        row.append(j)
+                if len(row)!=len(set(row)):
+                    return False
+            return True
+        vr=valid_row(board)
+        
+        def valid_col(matrix):    
+            for i in range(len(matrix)):
+                col=[]
+                for j in matrix:
+                    if j[i]!=".":
+                        col.append(j[i])
+                if len(col)!=len(set(col)):
+                    return False
+            return True
+        vc=valid_col(board)
+        if (vs==True and vr==True and vc==True):
+            return(True)
+        else:
+            return(False)
